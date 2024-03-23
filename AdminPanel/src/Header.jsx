@@ -6,11 +6,11 @@ import {
   BsJustify,
 } from "react-icons/bs";
 
-function Header({ openSidebar }) {
+function Header({ OpenSidebar }) {
   return (
     <header className="header">
       <div className="menu-icon">
-        <BsJustify className="icon" onClick={openSidebar} />
+        <BsJustify className="icon" onClick={OpenSidebar} />
       </div>
       <div className="header-left">
         <BsSearch className="icon" />

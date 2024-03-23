@@ -9,6 +9,7 @@ import Employee from "./Employee";
 import LeaveRequest from "./LeaveRequest";
 import LeaveReport from "./LeaveReport";
 import Logout from "./Logout";
+import AddDetails from "./AddDetails";
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -32,6 +33,7 @@ function App() {
           <Route path="/leave-request" element={<LeaveRequest />} />
           <Route path="/leave-reports" element={<LeaveReport />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/adddetails" element={<AddDetails />} />
         </Routes>
       </div>
     </Router>

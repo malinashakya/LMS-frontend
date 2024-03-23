@@ -66,3 +66,40 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #242424;
+  color: #fff;
+}
+
+.menu-icon {
+  display: none; /* Hide menu icon by default */
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+/* Media Queries for responsiveness */
+@media screen and (max-width: 768px) {
+  .menu-icon {
+    display: block; /* Show menu icon for smaller screens */
+  }
+
+  .header-left {
+    display: none; /* Hide header-left for smaller screens */
+  }
+
+  .header-right {
+    justify-content: flex-end; /* Align header-right items to the right */
+  }
+}

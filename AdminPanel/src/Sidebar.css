@@ -1,0 +1,54 @@
+
+.sidebar-responsive {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px; /* Adjust sidebar width */
+    background-color: #343a40; /* Set sidebar background color */
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .sidebar-title {
+    padding: 20px;
+  }
+  
+  .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-list-item {
+    margin-bottom: 15px;
+  }
+  
+  .sidebar-list-item a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+  }
+  
+  .sidebar-list-item a:hover {
+    background-color: #495057;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  
+  /* Media Queries for responsiveness */
+  @media screen and (max-width: 768px) {
+    .sidebar-responsive {
+      width: 200px; /* Adjust sidebar width for smaller screens */
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .sidebar-responsive {
+      width: 150px; /* Adjust sidebar width for even smaller screens */
+    }
+  }
+  
