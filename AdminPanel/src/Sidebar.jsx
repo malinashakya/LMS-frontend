@@ -29,27 +29,27 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/department">
+            <Link to="/department" onClick={openSidebarToggle}>
               <BsFillGrid3X3GapFill className="icon" /> Department
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/adddetails">
+            <Link to="/adddetails" onClick={openSidebarToggle}>
               <BsPeopleFill className="icon" /> Add Details
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/employees">
+            <Link to="/employees" onClick={openSidebarToggle}>
               <BsPeopleFill className="icon" /> Employees
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/leave-request">
+            <Link to="/leave-request" onClick={openSidebarToggle}>
               <BsListCheck className="icon" /> Leave Request
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/leave-reports">
+            <Link to="/leave-reports" onClick={openSidebarToggle}>
               <BsMenuButtonWideFill className="icon" /> Leave Reports
             </Link>
           </li>
