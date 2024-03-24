@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import "./Department.css"; // Import CSS file
 
 const Department = () => {
   const [departments, setDepartments] = useState([]);
@@ -10,10 +10,14 @@ const Department = () => {
     // Fetch departments from backend upon component mount
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/departments"
-        );
-        setDepartments(response.data);
+        // Dummy data for demonstration
+        const dummyData = [
+          { id: 1, code: "DEP001", name: "Department 1", employees: 10 },
+          { id: 2, code: "DEP002", name: "Department 2", employees: 15 },
+          { id: 3, code: "DEP003", name: "Department 3", employees: 8 },
+        ];
+
+        setDepartments(dummyData);
         setLoading(false);
         setError(null);
       } catch (error) {
@@ -27,18 +31,43 @@ const Department = () => {
   }, []);
 
   return (
-    <div>
+    <div className="department-container">
       <h2>Departments</h2>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <ul>
-          {departments.map((department) => (
-            <li key={department.id}>{department.name}</li>
-          ))}
-        </ul>
+        <table className="department-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Employees</th>
+              <th colSpan={2}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {departments.map((department) => (
+              <tr key={department.id}>
+                <td>{department.code}</td>
+                <td>{department.name}</td>
+                <td>{department.employees}</td>
+                <td>
+                  <button
+                    className="department-button"
+                    onClick={() => {
+                      // Handle view department action
+                      console.log(`View department ${department.name}`);
+                    }}
+                  >
+                    View Department
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

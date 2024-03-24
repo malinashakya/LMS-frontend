@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import "./Employee.css"; // Import CSS file
 
 const Employee = () => {
   const [employees, setEmployees] = useState([]);
@@ -10,8 +10,38 @@ const Employee = () => {
     // Fetch employees from backend upon component mount
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/employees");
-        setEmployees(response.data);
+        // Dummy data for demonstration
+        const dummyData = [
+          {
+            id: 1,
+            fullname: "John Doe",
+            address: "123 Main St",
+            dob: "1990-01-01",
+            contact: "123-456-7890",
+            department: "Engineering",
+            leaveLeft: 10,
+          },
+          {
+            id: 2,
+            fullname: "Jane Smith",
+            address: "456 Elm St",
+            dob: "1995-05-15",
+            contact: "987-654-3210",
+            department: "Marketing",
+            leaveLeft: 8,
+          },
+          {
+            id: 3,
+            fullname: "Alice Johnson",
+            address: "789 Oak St",
+            dob: "1988-10-20",
+            contact: "555-123-4567",
+            department: "Human Resources",
+            leaveLeft: 12,
+          },
+        ];
+
+        setEmployees(dummyData);
         setLoading(false);
         setError(null);
       } catch (error) {
@@ -25,18 +55,39 @@ const Employee = () => {
   }, []);
 
   return (
-    <div>
+    <div className="employee-container">
       <h2>Employees</h2>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <ul>
-          {employees.map((employee) => (
-            <li key={employee.id}>{employee.fullname}</li>
-          ))}
-        </ul>
+        <table className="employee-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fullname</th>
+              <th>Address</th>
+              <th>Date of Birth</th>
+              <th>Contact</th>
+              <th>Department</th>
+              <th>Leave Left</th>
+            </tr>
+          </thead>
+          <tbody>
+            {employees.map((employee) => (
+              <tr key={employee.id}>
+                <td>{employee.id}</td>
+                <td>{employee.fullname}</td>
+                <td>{employee.address}</td>
+                <td>{employee.dob}</td>
+                <td>{employee.contact}</td>
+                <td>{employee.department}</td>
+                <td>{employee.leaveLeft}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

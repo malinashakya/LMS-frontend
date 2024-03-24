@@ -1,0 +1,38 @@
+.employee-container {
+    margin: 20px;
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+}
+
+.employee-table th,
+.employee-table td {
+    height: 40px;
+    border: 1px solid white;
+    padding: 10px; /* Increase padding for better spacing */
+    text-align: center;
+}
+
+.employee-table th {
+    background-color: #333;
+    color: white;
+}
+
+/* Media Queries for responsiveness */
+@media screen and (max-width: 768px) {
+    .employee-table th,
+    .employee-table td {
+        font-size: 10px; /* Decrease font size for smaller screens */
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .employee-table th,
+    .employee-table td {
+        font-size: 7.5px; /* Further decrease font size for even smaller screens */
+        padding: 0px; /* Adjust padding for smaller screens */
+    }
+}
