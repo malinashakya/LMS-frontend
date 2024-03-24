@@ -1,69 +1,79 @@
+.leave-request-form {
+  width: 100%;
+  padding: 2px 85px;
+  margin-left: 80%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px; /* Set maximum width */
+}
 
-  
+.leave-request-form .form-group {
+  margin-bottom: 10px;
+}
+
+.leave-request-form label {
+  display: block;
+  font-weight: bold;
+}
+
+.leave-request-form input,
+.leave-request-form select,
+.leave-request-form textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.leave-request-form .date-range {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap */
+}
+
+.leave-request-form .date-range input[type="date"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.leave-request-form textarea {
+  height: 60px;
+}
+
+.leave-request-form .apply-leave-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.leave-request-form .apply-leave-button:hover {
+  background-color: #0056b3;
+}
+
+/* Media Queries for responsiveness */
+@media screen and (max-width: 600px) {
   .leave-request-form {
-    width: 100%;
-    padding:2px 85px;
-    margin-left:80%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    max-width: 400px; /* Set maximum width */
-  }
-  
-  .leave-request-form .form-group {
-    margin-bottom: 10px;
-  }
-  
-  .leave-request-form label {
-    display: block;
-    font-weight: bold;
-  }
-  
-  .leave-request-form input,
-  .leave-request-form select,
-  .leave-request-form textarea {
-    width: calc(100% - 20px);
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-left: 0; /* Adjust margin for smaller screens */
   }
-  
-  .leave-request-form .date-range {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap */
-  }
-  
-  .leave-request-form .date-range input[type="date"] {
-    flex: 1;
-    margin-right: 10px;
-  }
-  
+
   .leave-request-form textarea {
-    height: 60px;
+    height: 100px;
   }
-  
-  .leave-request-form .apply-leave-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+}
+
+@media screen and (max-width: 576px) {
+  .leave-request-form {
+    padding: 5px; /* Adjust padding for screens up to 576px */
   }
-  
-  .leave-request-form .apply-leave-button:hover {
-    background-color: #0056b3;
+}
+
+@media screen and (max-width: 768px) {
+  .leave-request-form {
+    padding: 15px; /* Adjust padding for screens up to 768px */
   }
-  
-  /* Media Queries for responsiveness */
-  @media screen and (max-width: 600px) {
-    .leave-request-form {
-      padding: 10px;
-    }
-  
-    .leave-request-form textarea {
-      height: 100px;
-    }
-  }
-  
+}
