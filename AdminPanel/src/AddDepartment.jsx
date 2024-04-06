@@ -5,23 +5,31 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function AddDepartment() {
   let navigate = useNavigate();
-  const [department, setDepartment] = useState({
-    departmentCode: "",
-    departmentName: "",
-  });
 
-  const { departmentCode, departmentName } = department;
+  const [departmentCode, setDepartmentCode] = useState("");
+  const [departmentName, setDepartmentName] = useState("");
 
-  const onInputChange = (event) => {
-    setDepartment({
-      ...department,
-      [event.target.name]: event.target.value,
-    });
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "departmentCode") {
+      setDepartmentCode(value);
+    } else if (name === "departmentName") {
+      setDepartmentName(value);
+    }
   };
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    await axios.post("http://localhost:8084/department", department);
-    navigate("/department");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", departmentCode, departmentName);
+    try {
+      await axios.post("http://localhost:8084/department", {
+        department_code: departmentCode,
+        department_name: departmentName,
+      });
+      navigate("/department");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -29,7 +37,7 @@ export default function AddDepartment() {
       <div className="row">
         <div className="form">
           <h2>Add Department</h2>
-          <form onSubmit={(event) => onSubmit(event)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="form-group">
               <label htmlFor="departmentCode">Department Code:</label>
               <input
@@ -37,7 +45,7 @@ export default function AddDepartment() {
                 id="departmentCode"
                 name="departmentCode"
                 value={departmentCode}
-                onChange={(event) => onInputChange(event)}
+                onChange={(e) => onInputChange(e)}
                 required
               />
             </div>
@@ -48,7 +56,7 @@ export default function AddDepartment() {
                 id="departmentName"
                 name="departmentName"
                 value={departmentName}
-                onChange={(event) => onInputChange(event)}
+                onChange={(e) => onInputChange(e)}
                 required
               />
             </div>
