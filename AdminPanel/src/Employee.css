@@ -21,6 +21,24 @@
     color: white;
 }
 
+.update-button {
+    background-color: #ffc107; /* Yellowish */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .delete-button {
+    background-color: #dc3545; /* Red */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
 /* Media Queries for responsiveness */
 @media screen and (max-width: 768px) {
     .employee-table th,

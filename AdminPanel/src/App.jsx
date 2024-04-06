@@ -10,6 +10,9 @@ import LeaveRequest from "./LeaveRequest";
 import LeaveReport from "./LeaveReport";
 import Logout from "./Logout";
 import AddDetails from "./AddDetails";
+import AddDepartment from "./AddDepartment";
+import ViewDepartment from "./ViewDepartment";
+import EditDepartment from "./EditDepartment";
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -34,6 +37,15 @@ function App() {
           <Route path="/leave-reports" element={<LeaveReport />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/adddetails" element={<AddDetails />} />
+          <Route path="/adddepartment" element={<AddDepartment />} />
+          <Route
+            path="/viewdepartment/:department_code"
+            element={<ViewDepartment />}
+          />
+          <Route
+            path="/editdepartment/:department_code"
+            element={<EditDepartment />}
+          />
         </Routes>
       </div>
     </Router>

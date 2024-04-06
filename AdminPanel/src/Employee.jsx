@@ -54,6 +54,16 @@ const Employee = () => {
     fetchEmployees();
   }, []);
 
+  const handleUpdate = (id) => {
+    // Implement update logic here
+    console.log(`Update employee with id ${id}`);
+  };
+
+  const handleDelete = (id) => {
+    // Implement delete logic here
+    console.log(`Delete employee with id ${id}`);
+  };
+
   return (
     <div className="employee-container">
       <h2>Employees</h2>
@@ -72,6 +82,7 @@ const Employee = () => {
               <th>Contact</th>
               <th>Department</th>
               <th>Leave Left</th>
+              <th colSpan={2}>Actions</th> {/* New column for actions */}
             </tr>
           </thead>
           <tbody>
@@ -84,6 +95,22 @@ const Employee = () => {
                 <td>{employee.contact}</td>
                 <td>{employee.department}</td>
                 <td>{employee.leaveLeft}</td>
+                <td>
+                  <button
+                    className="update-button"
+                    onClick={() => handleUpdate(employee.id)}
+                  >
+                    Update
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(employee.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

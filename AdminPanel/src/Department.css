@@ -22,18 +22,38 @@
   }
   
   .department-button {
-    background-color: #007bff;
+    background-color: #ffc107;
     color: white;
     border: none;
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 4px;
   }
-  
-  .department-button.reject-button {
-    background-color: red;
+  .department-delete-button {
+    background-color: #dc3545; /* Red */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
   }
-  
+.department-view-button{
+  background-color: #4251b4; 
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+  .department-add-button{
+    background-color: #4251b4; 
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-bottom: 50px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
   /* Media Queries for responsiveness */
   @media screen and (max-width: 768px) {
     .department-table th,
