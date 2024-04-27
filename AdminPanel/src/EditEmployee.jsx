@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const EditEmployee = () => {
   const { id } = useParams();
@@ -69,7 +69,8 @@ const EditEmployee = () => {
         <label>
           Date of Birth: <br />
           <input
-            type="date"
+            type="text"
+            placeholder="YYYY/MM/DD"
             name="date_of_birth"
             value={employee.date_of_birth || ""}
             onChange={handleChange}

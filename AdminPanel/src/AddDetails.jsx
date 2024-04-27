@@ -1,54 +1,79 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./AddDetails.css";
+import { useNavigate } from "react-router-dom";
 
 const AddDetails = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "",
     fullname: "",
     address: "",
     dob: "",
     contact: "",
-    department: "", // Add department field
-    // Add more fields as needed
+    department: {
+      department_code: "",
+      department_name: "",
+    },
   });
+  const [departments, setDepartments] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Fetch user details from backend upon component mount (optional)
-    // Remove this section if not needed
+    fetchDepartments();
   }, []);
 
+  const fetchDepartments = async () => {
+    try {
+      const response = await axios.get("http://localhost:8084/departments");
+      setDepartments(response.data);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+      setError("Error fetching departments");
+    }
+  };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "department") {
+      const selectedDepartment = departments.find(
+        (department) => department.department_code === e.target.value
+      );
+      setFormData({
+        ...formData,
+        department: {
+          department_code: selectedDepartment.department_code,
+          department_name: selectedDepartment.department_name,
+        },
+      });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit form data to backend
     try {
-      const res = await axios.post(
-        "http://localhost:8084/employee", // Update URL to the provided endpoint
-        formData
-      );
+      const res = await axios.post("http://localhost:8084/employee", formData);
       if (res.status === 200 || res.status === 201) {
-        // Check for success status codes
         console.log("Employee added successfully!");
-        // Clear the form or show a success message
         setFormData({
           id: "",
           fullname: "",
           address: "",
           dob: "",
           contact: "",
-          department: "",
+          department: {
+            department_code: "",
+            department_name: "",
+          },
         });
+        navigate("/employees");
       } else {
-        throw new Error("Error adding employee"); // Throw error for unexpected status codes
+        throw new Error("Error adding employee");
       }
     } catch (error) {
       console.error("Error:", error);
-      setError(error.message || "Error adding employee"); // Set error message
+      setError(error.message || "Error adding employee");
     }
   };
 
@@ -86,8 +111,9 @@ const AddDetails = () => {
         <div className="form-group">
           <label>Date of Birth:</label>
           <input
-            type="date"
+            type="text"
             name="dob"
+            placeholder="YYYY/MM/DD"
             value={formData.dob}
             onChange={handleChange}
           />
@@ -103,14 +129,18 @@ const AddDetails = () => {
         </div>
         <div className="form-group">
           <label>Department:</label>
-          <input
-            type="text"
-            name="department"
-            value={formData.department}
-            onChange={handleChange}
-          />
+          <select name="department" onChange={handleChange}>
+            <option value="">Select Department</option>
+            {departments.map((department) => (
+              <option
+                key={department.department_code}
+                value={department.department_code}
+              >
+                {`${department.department_code} - ${department.department_name}`}
+              </option>
+            ))}
+          </select>
         </div>
-        {/* Add more fields as needed */}
         {error && <p className="error-message">{error}</p>}
         <button className="submit-button" type="submit">
           Submit
