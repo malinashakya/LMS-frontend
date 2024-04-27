@@ -13,6 +13,7 @@ import AddDetails from "./AddDetails";
 import AddDepartment from "./AddDepartment";
 import ViewDepartment from "./ViewDepartment";
 import EditDepartment from "./EditDepartment";
+import EditEmployee from "./EditEmployee";
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -38,6 +39,7 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/adddetails" element={<AddDetails />} />
           <Route path="/adddepartment" element={<AddDepartment />} />
+
           <Route
             path="/viewdepartment/:department_code"
             element={<ViewDepartment />}
@@ -46,6 +48,7 @@ function App() {
             path="/editdepartment/:department_code"
             element={<EditDepartment />}
           />
+          <Route path="/editemployee/:id" element={<EditEmployee />} />
         </Routes>
       </div>
     </Router>

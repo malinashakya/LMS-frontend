@@ -1,67 +1,66 @@
 import { useState, useEffect } from "react";
-import "./Employee.css"; // Import CSS file
+import "./Employee.css";
+import { Link, useParams } from "react-router-dom";
 
 const Employee = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    // Fetch employees from backend upon component mount
     const fetchEmployees = async () => {
       try {
-        // Dummy data for demonstration
-        const dummyData = [
-          {
-            id: 1,
-            fullname: "John Doe",
-            address: "123 Main St",
-            dob: "1990-01-01",
-            contact: "123-456-7890",
-            department: "Engineering",
-            leaveLeft: 10,
-          },
-          {
-            id: 2,
-            fullname: "Jane Smith",
-            address: "456 Elm St",
-            dob: "1995-05-15",
-            contact: "987-654-3210",
-            department: "Marketing",
-            leaveLeft: 8,
-          },
-          {
-            id: 3,
-            fullname: "Alice Johnson",
-            address: "789 Oak St",
-            dob: "1988-10-20",
-            contact: "555-123-4567",
-            department: "Human Resources",
-            leaveLeft: 12,
-          },
-        ];
+        const response = await fetch("http://localhost:8084/employees");
+        if (!response.ok) {
+          throw new Error("Failed to fetch employees");
+        }
+        const data = await response.json();
 
-        setEmployees(dummyData);
+        const departmentResponse = await fetch(
+          "http://localhost:8084/departments"
+        );
+        if (!departmentResponse.ok) {
+          throw new Error("Failed to fetch departments");
+        }
+        const departmentData = await departmentResponse.json();
+
+        const departmentMap = {};
+        departmentData.forEach((department) => {
+          departmentMap[department.department_code] = department;
+        });
+
+        const modifiedData = data.map((employee) => ({
+          ...employee,
+          leaveLeft: 5,
+          department: departmentMap[employee.department_code],
+        }));
+
+        setEmployees(modifiedData);
         setLoading(false);
         setError(null);
       } catch (error) {
-        setError("Error fetching employees");
+        setError("Error fetching data: " + error.message);
         setLoading(false);
-        console.error("Error fetching employees:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchEmployees();
   }, []);
 
-  const handleUpdate = (id) => {
-    // Implement update logic here
-    console.log(`Update employee with id ${id}`);
-  };
-
-  const handleDelete = (id) => {
-    // Implement delete logic here
-    console.log(`Delete employee with id ${id}`);
+  const handleDelete = async (id) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this employee?")) {
+        await fetch(`http://localhost:8084/employees/${id}`, {
+          method: "DELETE",
+        });
+        // Filter out the deleted employee from the employees array
+        setEmployees(employees.filter((employee) => employee.id !== id));
+      }
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+    }
   };
 
   return (
@@ -82,7 +81,7 @@ const Employee = () => {
               <th>Contact</th>
               <th>Department</th>
               <th>Leave Left</th>
-              <th colSpan={2}>Actions</th> {/* New column for actions */}
+              <th colSpan={2}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -91,17 +90,21 @@ const Employee = () => {
                 <td>{employee.id}</td>
                 <td>{employee.fullname}</td>
                 <td>{employee.address}</td>
-                <td>{employee.dob}</td>
+                <td>{employee.dateOfBirth}</td>
                 <td>{employee.contact}</td>
-                <td>{employee.department}</td>
+                <td>
+                  {employee.department
+                    ? employee.department.department_name
+                    : "Unknown"}
+                </td>
                 <td>{employee.leaveLeft}</td>
                 <td>
-                  <button
+                  <Link
                     className="update-button"
-                    onClick={() => handleUpdate(employee.id)}
+                    to={`/editemployee/${employee.id}`}
                   >
-                    Update
-                  </button>
+                    Edit
+                  </Link>
                 </td>
                 <td>
                   <button

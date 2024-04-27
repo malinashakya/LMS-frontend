@@ -15,25 +15,9 @@ const AddDetails = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Fetch user details from backend upon component mount
-    const fetchUserDetails = async () => {
-      if (formData.id) {
-        try {
-          const response = await axios.get(
-            `http://localhost:8080/api/user/${formData.id}`
-          );
-          setFormData({ ...formData, fullname: response.data.fullname }); // Automatically fill fullname field
-          setError(""); // Reset error if user is found
-        } catch (error) {
-          setFormData({ ...formData, fullname: "" }); // Clear fullname field
-          setError("Employee not found with the provided ID"); // Set error message
-          console.error("Error fetching user details:", error);
-        }
-      }
-    };
-
-    fetchUserDetails();
-  }, [formData.id]); // Fetch details whenever id changes
+    // Fetch user details from backend upon component mount (optional)
+    // Remove this section if not needed
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,14 +28,27 @@ const AddDetails = () => {
     // Submit form data to backend
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/employees",
+        "http://localhost:8084/employee", // Update URL to the provided endpoint
         formData
       );
-      console.log(res.data);
-      // Handle success (e.g., show a success message)
+      if (res.status === 200 || res.status === 201) {
+        // Check for success status codes
+        console.log("Employee added successfully!");
+        // Clear the form or show a success message
+        setFormData({
+          id: "",
+          fullname: "",
+          address: "",
+          dob: "",
+          contact: "",
+          department: "",
+        });
+      } else {
+        throw new Error("Error adding employee"); // Throw error for unexpected status codes
+      }
     } catch (error) {
       console.error("Error:", error);
-      // Handle error (e.g., show an error message)
+      setError(error.message || "Error adding employee"); // Set error message
     }
   };
 
@@ -74,7 +71,7 @@ const AddDetails = () => {
             type="text"
             name="fullname"
             value={formData.fullname}
-            readOnly
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -105,8 +102,6 @@ const AddDetails = () => {
           />
         </div>
         <div className="form-group">
-          {" "}
-          {/* Department field */}
           <label>Department:</label>
           <input
             type="text"
