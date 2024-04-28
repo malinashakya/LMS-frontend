@@ -17,23 +17,11 @@ const Employee = () => {
         }
         const data = await response.json();
 
-        const departmentResponse = await fetch(
-          "http://localhost:8084/departments"
-        );
-        if (!departmentResponse.ok) {
-          throw new Error("Failed to fetch departments");
-        }
-        const departmentData = await departmentResponse.json();
-
-        const departmentMap = {};
-        departmentData.forEach((department) => {
-          departmentMap[department.department_code] = department;
-        });
+        // No need to fetch department data
 
         const modifiedData = data.map((employee) => ({
           ...employee,
-          leaveLeft: 5,
-          department: departmentMap[employee.department_code],
+          leaveLeft: 5, // Assuming leaveLeft is a default value
         }));
 
         setEmployees(modifiedData);
@@ -92,11 +80,7 @@ const Employee = () => {
                 <td>{employee.address}</td>
                 <td>{employee.dateOfBirth}</td>
                 <td>{employee.contact}</td>
-                <td>
-                  {employee.department
-                    ? employee.department.department_name
-                    : "Unknown"}
-                </td>
+                <td>{employee.department.department_name || "Unknown"}</td>
                 <td>{employee.leaveLeft}</td>
                 <td>
                   <Link
