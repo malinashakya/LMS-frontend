@@ -6,7 +6,7 @@ const Employee = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = useParams();
+  const { employee_id } = useParams();
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -37,14 +37,16 @@ const Employee = () => {
     fetchEmployees();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (employee_id) => {
     try {
       if (window.confirm("Are you sure you want to delete this employee?")) {
-        await fetch(`http://localhost:8084/employees/${id}`, {
+        await fetch(`http://localhost:8084/employees/${employee_id}`, {
           method: "DELETE",
         });
         // Filter out the deleted employee from the employees array
-        setEmployees(employees.filter((employee) => employee.id !== id));
+        setEmployees(
+          employees.filter((employee) => employee.employee_id !== employee_id)
+        );
       }
     } catch (error) {
       console.error("Error deleting employee:", error);
@@ -74,9 +76,16 @@ const Employee = () => {
           </thead>
           <tbody>
             {employees.map((employee) => (
-              <tr key={employee.id}>
-                <td>{employee.id}</td>
-                <td>{employee.fullname}</td>
+              <tr key={employee.employee_id}>
+                <td>
+                  {employee.user ? employee.user.id || "Unknown" : "Unknown"}
+                </td>
+                <td>
+                  {employee.user
+                    ? employee.user.fullname || "Unknown"
+                    : "Unknown"}
+                </td>
+
                 <td>{employee.address}</td>
                 <td>{employee.dateOfBirth}</td>
                 <td>{employee.contact}</td>
@@ -85,7 +94,7 @@ const Employee = () => {
                 <td>
                   <Link
                     className="update-button"
-                    to={`/editemployee/${employee.id}`}
+                    to={`/editemployee/${employee.user.id}`}
                   >
                     Edit
                   </Link>
@@ -93,7 +102,7 @@ const Employee = () => {
                 <td>
                   <button
                     className="delete-button"
-                    onClick={() => handleDelete(employee.id)}
+                    onClick={() => handleDelete(employee.user.id)}
                   >
                     Delete
                   </button>

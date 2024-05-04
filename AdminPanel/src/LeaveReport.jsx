@@ -26,6 +26,7 @@ const LeaveReport = () => {
             <th>Starting Date</th>
             <th>Ending Date</th>
             <th>Reason for Leave</th>
+            <th>Status</th>
             <th colSpan={2}>Action</th>
           </tr>
         </thead>
@@ -38,6 +39,7 @@ const LeaveReport = () => {
             <td>2024-04-01</td>
             <td>2024-04-05</td>
             <td>Vacation</td>
+            <td>Pending </td>
             <td>
               <button className="approve-button" onClick={handleApprove}>
                 Approve

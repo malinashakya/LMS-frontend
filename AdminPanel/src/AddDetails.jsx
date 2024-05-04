@@ -53,7 +53,25 @@ const AddDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8084/employee", formData);
+      const payload = {
+        employeeId: formData.id,
+        address: formData.address,
+        dateOfBirth: formData.dob,
+        contact: formData.contact,
+        department: {
+          department_code: formData.department.department_code,
+          department_name: formData.department.department_name,
+        },
+        user: {
+          id: formData.id,
+          email: "", // Add email here if available
+          password: "", // Add password here if available
+          role: "", // Add role here if available
+          fullname: formData.fullname,
+        },
+      };
+
+      const res = await axios.post("http://localhost:8084/employee", payload);
       if (res.status === 200 || res.status === 201) {
         console.log("Employee added successfully!");
         setFormData({

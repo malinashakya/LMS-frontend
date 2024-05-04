@@ -53,8 +53,9 @@ const EditEmployee = () => {
           <input
             type="text"
             name="fullname"
-            value={employee.fullname || ""}
+            value={employee.user?.fullname || ""}
             onChange={handleChange}
+            disabled
           />
         </label>
         <label>
