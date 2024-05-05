@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   BsFillGrid3X3GapFill,
   BsPeopleFill,
@@ -17,11 +18,35 @@ import {
 } from "recharts";
 
 function Home() {
+  const [employeesCount, setEmployeesCount] = useState(0);
+  const [leavesCount, setLeavesCount] = useState(0);
+  const [departmentsCount, setDepartmentsCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch employees count
+    fetch("http://localhost:8084/employees")
+      .then((response) => response.json())
+      .then((data) => setEmployeesCount(data.length))
+      .catch((error) => console.error("Error fetching employees:", error));
+
+    // Fetch leaves count
+    fetch("http://localhost:8084/leaves")
+      .then((response) => response.json())
+      .then((data) => setLeavesCount(data.length))
+      .catch((error) => console.error("Error fetching leaves:", error));
+
+    // Fetch departments count
+    fetch("http://localhost:8084/departments")
+      .then((response) => response.json())
+      .then((data) => setDepartmentsCount(data.length))
+      .catch((error) => console.error("Error fetching departments:", error));
+  }, []);
+
   const data = [
-    { name: "Employee", value: 13 },
-    { name: "Users", value: 12 },
-    { name: "Department", value: 4 },
-    { name: "Alerts", value: 2 },
+    { name: "Employees", value: employeesCount },
+    { name: "Users", value: employeesCount + 1 },
+    { name: "Departments", value: departmentsCount },
+    { name: "Leaves", value: leavesCount }, // Assuming this is the count of leaves
   ];
 
   return (
@@ -36,28 +61,28 @@ function Home() {
             <h3>USERS</h3>
             <BsPeopleFill className="card_icon" />
           </div>
-          <h1>12</h1>
+          <h1>{employeesCount + 1}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>DEPARTMENT</h3>
             <BsFillGrid3X3GapFill className="card_icon" />
           </div>
-          <h1>4</h1>
+          <h1>{departmentsCount}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>EMPLOYEES</h3>
             <BsPeopleFill className="card_icon" />
           </div>
-          <h1>13</h1>
+          <h1>{employeesCount}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
-            <h3>ALERTS</h3>
+            <h3>Leaves</h3>
             <BsFillBellFill className="card_icon" />
           </div>
-          <h1>2</h1>
+          <h1>{leavesCount}</h1>
         </div>
       </div>
 

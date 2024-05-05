@@ -1,6 +1,16 @@
+import { useState, useEffect } from "react";
 import "./LeaveReport.css"; // Import CSS file
 
 const LeaveReport = () => {
+  const [leaves, setLeaves] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8084/leaves") // Fetch leaves data from the API
+      .then((response) => response.json())
+      .then((data) => setLeaves(data))
+      .catch((error) => console.error("Error fetching leaves:", error));
+  }, []); // Empty dependency array ensures useEffect runs only once on component mount
+
   const handleApprove = () => {
     alert("Leave has been accepted");
   };
@@ -31,27 +41,27 @@ const LeaveReport = () => {
           </tr>
         </thead>
         <tbody>
-          {/* Sample data */}
-          <tr>
-            <td>1</td>
-            <td>EMP001</td>
-            <td>John Doe</td>
-            <td>2024-04-01</td>
-            <td>2024-04-05</td>
-            <td>Vacation</td>
-            <td>Pending </td>
-            <td>
-              <button className="approve-button" onClick={handleApprove}>
-                Approve
-              </button>
-            </td>
-            <td>
-              <button className="reject-button" onClick={handleReject}>
-                Reject
-              </button>
-            </td>
-          </tr>
-          {/* Add more rows as needed */}
+          {leaves.map((leave, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{leave.employee.employeeId}</td>
+              <td>{leave.employee.user.fullname}</td>
+              <td>{leave.leaveStartDate}</td>
+              <td>{leave.leaveEndDate}</td>
+              <td>{leave.leaveReason}</td>
+              <td>{leave.status}</td>
+              <td>
+                <button className="approve-button" onClick={handleApprove}>
+                  Approve
+                </button>
+              </td>
+              <td>
+                <button className="reject-button" onClick={handleReject}>
+                  Reject
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
