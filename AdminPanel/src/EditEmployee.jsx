@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-const EditEmployee = () => {
+const EditEmployee = ({ role }) => {
+  // Receive the `role` prop
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -38,7 +39,8 @@ const EditEmployee = () => {
     try {
       await axios.put(`http://localhost:8084/employees/${id}`, employee);
       console.log("Employee updated successfully!");
-      navigate("/employees"); // Navigate to employee list page after successful update
+      // Navigate based on the role
+      navigate(role === "admin" ? "/employees" : "/employee-record");
     } catch (error) {
       console.error("Error updating employee:", error);
     }

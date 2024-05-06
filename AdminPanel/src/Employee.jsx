@@ -76,7 +76,7 @@ const Employee = () => {
           </thead>
           <tbody>
             {employees.map((employee) => (
-              <tr key={employee.employee_id}>
+              <tr key={employee.user ? employee.user.id : employee.employee_id}>
                 <td>
                   {employee.user ? employee.user.id || "Unknown" : "Unknown"}
                 </td>

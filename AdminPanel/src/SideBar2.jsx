@@ -1,6 +1,5 @@
 import {
   BsGrid1X2Fill,
-  BsFillGrid3X3GapFill,
   BsPeopleFill,
   BsListCheck,
   BsMenuButtonWideFill,
@@ -8,7 +7,7 @@ import {
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-function Sidebar({ openSidebarToggle, OpenSidebar }) {
+function SideBar2({ openSidebarToggle, OpenSidebar }) {
   // Handle logout functionality
   const handleLogout = () => {
     // Perform logout logic here, such as clearing authentication tokens, etc.
@@ -29,21 +28,15 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/department" onClick={openSidebarToggle}>
-              <BsFillGrid3X3GapFill className="icon" /> Department
+            <Link to="/employee-record" onClick={openSidebarToggle}>
+              <BsPeopleFill className="icon" /> Detail
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/adddetails" onClick={openSidebarToggle}>
-              <BsPeopleFill className="icon" /> Add Details
+            <Link to="/leave-request" onClick={openSidebarToggle}>
+              <BsListCheck className="icon" /> Leave Request
             </Link>
           </li>
-          <li className="sidebar-list-item">
-            <Link to="/employees" onClick={openSidebarToggle}>
-              <BsPeopleFill className="icon" /> Employees
-            </Link>
-          </li>
-
           <li className="sidebar-list-item">
             <Link to="/leave-reports" onClick={openSidebarToggle}>
               <BsMenuButtonWideFill className="icon" /> Leave Reports
@@ -61,4 +54,4 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
   );
 }
 
-export default Sidebar;
+export default SideBar2;
