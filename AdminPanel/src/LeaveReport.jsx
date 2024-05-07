@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./LeaveReport.css"; // Import CSS file
 
-const LeaveReport = () => {
+const LeaveReport = ({ role }) => {
   const [leaves, setLeaves] = useState([]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const LeaveReport = () => {
             <th>Ending Date</th>
             <th>Reason for Leave</th>
             <th>Status</th>
-            <th colSpan={2}>Action</th>
+            {role === "admin" && <th colSpan={2}>Action</th>}
           </tr>
         </thead>
         <tbody>
@@ -50,16 +50,20 @@ const LeaveReport = () => {
               <td>{leave.leaveEndDate}</td>
               <td>{leave.leaveReason}</td>
               <td>{leave.status}</td>
-              <td>
-                <button className="approve-button" onClick={handleApprove}>
-                  Approve
-                </button>
-              </td>
-              <td>
-                <button className="reject-button" onClick={handleReject}>
-                  Reject
-                </button>
-              </td>
+              {role === "admin" && (
+                <>
+                  <td>
+                    <button className="approve-button" onClick={handleApprove}>
+                      Approve
+                    </button>
+                  </td>
+                  <td>
+                    <button className="reject-button" onClick={handleReject}>
+                      Reject
+                    </button>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>

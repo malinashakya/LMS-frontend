@@ -1,8 +1,8 @@
 import { useState } from "react";
 import {
-  BsFillBellFill,
+  // BsFillBellFill,
   BsPersonCircle,
-  BsSearch,
+  // BsSearch,
   BsJustify,
 } from "react-icons/bs";
 
@@ -18,19 +18,19 @@ function Header({ OpenSidebar }) {
   return (
     <header className="header">
       <div className="logo-container">
-        <h1 className="logo">HRMS</h1>
+        <h1 className="logo">LMS</h1>
       </div>
       <div className="menu-icon">
         <BsJustify className="icon" onClick={OpenSidebar} />
       </div>
       <div className="header-left">
-        <div className="search-container">
+        {/* <div className="search-container">
           <input type="text" placeholder="Search..." />
           <BsSearch className="search-icon" style={{ color: "grey" }} />
-        </div>
+        </div> */}
       </div>
       <div className="header-right">
-        <BsFillBellFill className="icon" />
+        {/* <BsFillBellFill className="icon" /> */}
         <div className="dropdown-container">
           <BsPersonCircle
             className="icon"

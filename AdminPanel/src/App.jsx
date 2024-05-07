@@ -16,6 +16,7 @@ import EditDepartment from "./EditDepartment";
 import EditEmployee from "./EditEmployee";
 import SideBar2 from "./SideBar2";
 import EmployeeRecord from "./assets/EmployeeRecord";
+// import SessionInfoComponent from "./SessionInfoComponent";
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -36,6 +37,8 @@ function App() {
   return (
     <Router>
       <div className="grid-container">
+        {/* Just for checking Session Purpose */}
+        {/* <SessionInfoComponent /> */}
         <Header OpenSidebar={OpenSidebar} />
         {/* Conditionally render Sidebar or SideBar2 based on the role */}
         {role === "admin" ? (
@@ -54,7 +57,7 @@ function App() {
           <Route path="/department" element={<Department />} />
           <Route path="/employees" element={<Employee />} />
           <Route path="/leave-request" element={<LeaveRequest />} />
-          <Route path="/leave-reports" element={<LeaveReport />} />
+          <Route path="/leave-reports" element={<LeaveReport role={role} />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/adddetails" element={<AddDetails />} />
           <Route path="/adddepartment" element={<AddDepartment />} />
