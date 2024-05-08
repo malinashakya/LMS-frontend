@@ -1,14 +1,49 @@
 import { useState } from "react";
 import "./LeaveRequest.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LeaveRequest = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const employeeId = 1;
+  const [startDate, setStartDate] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
+  const [endDate, setEndDate] = useState(new Date().toISOString().slice(0, 10));
   const [leaveType, setLeaveType] = useState("Casual");
   const [leaveReason, setLeaveReason] = useState("");
+  const [warning, setWarning] = useState(""); // State to manage warning message
+  const navigate = useNavigate();
 
-  const handleApplyLeave = () => {
-    // Handle applying leave here (to be implemented)
+  const handleApplyLeave = async () => {
+    try {
+      if (new Date(endDate) <= new Date(startDate)) {
+        setWarning("Leave end date must be greater than leave start date."); // Set warning message
+        return;
+      }
+
+      const newLeave = {
+        employee: {
+          employeeId: employeeId,
+        },
+        leaveType: leaveType,
+        leaveStartDate: startDate,
+        leaveEndDate: endDate,
+        leaveReason: leaveReason,
+        status: "Pending",
+      };
+
+      await axios.post("http://localhost:8084/leave", newLeave);
+
+      setStartDate(new Date().toISOString().slice(0, 10));
+      setEndDate(new Date().toISOString().slice(0, 10));
+      setLeaveType("Casual");
+      setLeaveReason("");
+
+      console.log("Leave applied successfully!");
+      navigate("/leave-reports"); // Navigate to leave reports page after successful leave application
+    } catch (error) {
+      console.error("Error applying leave:", error);
+    }
   };
 
   return (
@@ -16,11 +51,7 @@ const LeaveRequest = () => {
       <h2>Leave Request</h2>
       <div className="form-group">
         <label>Employee ID:</label>
-        <input type="text" value="12345" disabled />
-      </div>
-      <div className="form-group">
-        <label>Employee Name:</label>
-        <input type="text" value="John Doe" disabled />
+        <input type="text" value={employeeId} disabled />
       </div>
       <div className="form-group">
         <label>Leave Type:</label>
@@ -59,6 +90,8 @@ const LeaveRequest = () => {
           Apply Leave
         </button>
       </div>
+      {warning && <p className="warning-message">{warning}</p>}{" "}
+      {/* Display warning message */}
     </div>
   );
 };

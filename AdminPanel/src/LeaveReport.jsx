@@ -1,26 +1,64 @@
 import { useState, useEffect } from "react";
 import "./LeaveReport.css"; // Import CSS file
+import axios from "axios"; // Import axios for making HTTP requests
 
 const LeaveReport = ({ role }) => {
   const [leaves, setLeaves] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8084/leaves") // Fetch leaves data from the API
-      .then((response) => response.json())
-      .then((data) => setLeaves(data))
-      .catch((error) => console.error("Error fetching leaves:", error));
+    fetchLeaves(); // Fetch leaves data when the component mounts
   }, []); // Empty dependency array ensures useEffect runs only once on component mount
 
-  const handleApprove = () => {
-    alert("Leave has been accepted");
+  const fetchLeaves = async () => {
+    try {
+      const response = await fetch("http://localhost:8084/leaves");
+      const data = await response.json();
+      setLeaves(data);
+    } catch (error) {
+      console.error("Error fetching leaves:", error);
+    }
   };
 
-  const handleReject = () => {
+  const handleApprove = async (leaveId) => {
+    try {
+      await axios.put(`http://localhost:8084/leaves/${leaveId}`, {
+        status: "Approved",
+      });
+
+      // Update the leave status in the local state
+      setLeaves((prevLeaves) =>
+        prevLeaves.map((leave) =>
+          leave.leaveId === leaveId ? { ...leave, status: "Approved" } : leave
+        )
+      );
+
+      alert("Leave has been approved");
+    } catch (error) {
+      console.error("Error approving leave:", error);
+    }
+  };
+
+  const handleReject = async (leaveId) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to reject the leave?"
     );
     if (isConfirmed) {
-      alert("Leave has been rejected");
+      try {
+        await axios.put(`http://localhost:8084/leaves/${leaveId}`, {
+          status: "Rejected",
+        });
+
+        // Update the leave status in the local state
+        setLeaves((prevLeaves) =>
+          prevLeaves.map((leave) =>
+            leave.leaveId === leaveId ? { ...leave, status: "Rejected" } : leave
+          )
+        );
+
+        alert("Leave has been rejected");
+      } catch (error) {
+        console.error("Error rejecting leave:", error);
+      }
     }
   };
 
@@ -53,12 +91,18 @@ const LeaveReport = ({ role }) => {
               {role === "admin" && (
                 <>
                   <td>
-                    <button className="approve-button" onClick={handleApprove}>
+                    <button
+                      className="approve-button"
+                      onClick={() => handleApprove(leave.leaveId)}
+                    >
                       Approve
                     </button>
                   </td>
                   <td>
-                    <button className="reject-button" onClick={handleReject}>
+                    <button
+                      className="reject-button"
+                      onClick={() => handleReject(leave.leaveId)}
+                    >
                       Reject
                     </button>
                   </td>
