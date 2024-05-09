@@ -21,14 +21,15 @@ const LeaveReport = ({ role }) => {
 
   const handleApprove = async (leaveId) => {
     try {
+      // Update the leave status to "Accepted" in the backend
       await axios.put(`http://localhost:8084/leaves/${leaveId}`, {
-        status: "Approved",
+        status: "Accepted",
       });
 
       // Update the leave status in the local state
       setLeaves((prevLeaves) =>
         prevLeaves.map((leave) =>
-          leave.leaveId === leaveId ? { ...leave, status: "Approved" } : leave
+          leave.leaveId === leaveId ? { ...leave, status: "Accepted" } : leave
         )
       );
 
@@ -44,6 +45,7 @@ const LeaveReport = ({ role }) => {
     );
     if (isConfirmed) {
       try {
+        // Update the leave status to "Rejected" in the backend
         await axios.put(`http://localhost:8084/leaves/${leaveId}`, {
           status: "Rejected",
         });
