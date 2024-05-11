@@ -21,17 +21,20 @@ const LeaveReport = ({ role }) => {
 
   const handleApprove = async (leaveId) => {
     try {
+      // Fetch existing leave data from the backend
+      const response = await axios.get(
+        `http://localhost:8084/leaves/${leaveId}`
+      );
+      const existingLeaveData = response.data;
+
       // Update the leave status to "Accepted" in the backend
       await axios.put(`http://localhost:8084/leaves/${leaveId}`, {
+        ...existingLeaveData, // Include existing leave data
         status: "Accepted",
       });
 
-      // Update the leave status in the local state
-      setLeaves((prevLeaves) =>
-        prevLeaves.map((leave) =>
-          leave.leaveId === leaveId ? { ...leave, status: "Accepted" } : leave
-        )
-      );
+      // Fetch updated leave data from the backend
+      await fetchLeaves();
 
       alert("Leave has been approved");
     } catch (error) {
@@ -45,17 +48,20 @@ const LeaveReport = ({ role }) => {
     );
     if (isConfirmed) {
       try {
+        // Fetch existing leave data from the backend
+        const response = await axios.get(
+          `http://localhost:8084/leaves/${leaveId}`
+        );
+        const existingLeaveData = response.data;
+
         // Update the leave status to "Rejected" in the backend
         await axios.put(`http://localhost:8084/leaves/${leaveId}`, {
+          ...existingLeaveData, // Include existing leave data
           status: "Rejected",
         });
 
-        // Update the leave status in the local state
-        setLeaves((prevLeaves) =>
-          prevLeaves.map((leave) =>
-            leave.leaveId === leaveId ? { ...leave, status: "Rejected" } : leave
-          )
-        );
+        // Fetch updated leave data from the backend
+        await fetchLeaves();
 
         alert("Leave has been rejected");
       } catch (error) {

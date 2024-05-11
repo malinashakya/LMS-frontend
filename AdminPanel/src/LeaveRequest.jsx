@@ -16,8 +16,10 @@ const LeaveRequest = () => {
 
   const handleApplyLeave = async () => {
     try {
-      if (new Date(endDate) <= new Date(startDate)) {
-        setWarning("Leave end date must be greater than leave start date."); // Set warning message
+      if (new Date(endDate) < new Date(startDate)) {
+        setWarning(
+          "Leave end date must be equal or greater than leave start date."
+        ); // Set warning message
         return;
       }
 
