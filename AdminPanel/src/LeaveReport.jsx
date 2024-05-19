@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./LeaveReport.css"; // Import CSS file
 import axios from "axios"; // Import axios for making HTTP requests
 
-const LeaveReport = ({ role }) => {
+const LeaveReport = ({ role, id }) => {
   const [leaves, setLeaves] = useState([]);
 
   useEffect(() => {

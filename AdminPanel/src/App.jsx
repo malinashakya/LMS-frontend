@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios"; // Import Axios
 import "./App.css";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -16,20 +17,27 @@ import EditDepartment from "./EditDepartment";
 import EditEmployee from "./EditEmployee";
 import SideBar2 from "./SideBar2";
 import EmployeeRecord from "./assets/EmployeeRecord";
-// import SessionInfoComponent from "./SessionInfoComponent";
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const [role, setRole] = useState("");
+  const [id, setId] = useState(""); // Add state for ID
 
   useEffect(() => {
-    // Get the role from the URL query parameters
+    // Fetch role from URL query params
     const urlParams = new URLSearchParams(window.location.search);
     const roleParam = urlParams.get("role");
+    const fullnameParam = urlParams.get("fullname");
+    const idParam = urlParams.get("id"); // Use idParam to avoid naming conflict
+    console.log("Fullname:", fullnameParam);
+    console.log("ID:", idParam);
 
-    // Set the role in the state
     setRole(roleParam);
+    setId(idParam); // Set ID state
+    console.log("Role:", roleParam);
+    axios.defaults.headers.common["Role"] = roleParam; // Example with role
   }, []);
+
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
@@ -37,10 +45,7 @@ function App() {
   return (
     <Router>
       <div className="grid-container">
-        {/* Just for checking Session Purpose */}
-        {/* <SessionInfoComponent /> */}
         <Header OpenSidebar={OpenSidebar} />
-        {/* Conditionally render Sidebar or SideBar2 based on the role */}
         {role === "admin" ? (
           <Sidebar
             openSidebarToggle={openSidebarToggle}
@@ -57,12 +62,14 @@ function App() {
           <Route path="/department" element={<Department />} />
           <Route path="/employees" element={<Employee />} />
           <Route path="/leave-request" element={<LeaveRequest />} />
-          <Route path="/leave-reports" element={<LeaveReport role={role} />} />
+          <Route
+            path="/leave-reports"
+            element={<LeaveReport role={role} id={id} />}
+          />
           <Route path="/logout" element={<Logout />} />
           <Route path="/adddetails" element={<AddDetails />} />
           <Route path="/adddepartment" element={<AddDepartment />} />
           <Route path="/employee-record" element={<EmployeeRecord />} />
-
           <Route
             path="/viewdepartment/:department_code"
             element={<ViewDepartment />}
