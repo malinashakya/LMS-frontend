@@ -8,6 +8,9 @@ import {
 import { Link } from "react-router-dom";
 
 function SideBar2({ openSidebarToggle, OpenSidebar }) {
+  // Retrieve id from localStorage
+  // const id = localStorage.getItem("id");
+
   // Handle logout functionality
   const handleLogout = () => {
     // Perform logout logic here, such as clearing authentication tokens, etc.
@@ -28,7 +31,7 @@ function SideBar2({ openSidebarToggle, OpenSidebar }) {
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/employee-record" onClick={openSidebarToggle}>
+            <Link to="/employee-record/1" onClick={OpenSidebar}>
               <BsPeopleFill className="icon" /> Detail
             </Link>
           </li>

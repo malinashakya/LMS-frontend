@@ -13,3 +13,4 @@ For charts and react icons
 npm install recharts react-icons
 npm install react-router-dom
 npm i axios
+npm install prop-types

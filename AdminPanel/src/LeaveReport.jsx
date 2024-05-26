@@ -19,7 +19,12 @@ const LeaveReport = ({ role, id }) => {
     }
   };
 
-  const handleApprove = async (leaveId) => {
+  const handleApprove = async (leaveId, leaveStartDate) => {
+    if (new Date(leaveStartDate) < new Date()) {
+      alert("Cannot approve leave. Leave starting date has already passed.");
+      return;
+    }
+
     try {
       // Fetch existing leave data from the backend
       const response = await axios.get(
@@ -42,7 +47,12 @@ const LeaveReport = ({ role, id }) => {
     }
   };
 
-  const handleReject = async (leaveId) => {
+  const handleReject = async (leaveId, leaveStartDate) => {
+    if (new Date(leaveStartDate) < new Date()) {
+      alert("Cannot reject leave. Leave starting date has already passed.");
+      return;
+    }
+
     const isConfirmed = window.confirm(
       "Are you sure you want to reject the leave?"
     );
@@ -101,7 +111,10 @@ const LeaveReport = ({ role, id }) => {
                   <td>
                     <button
                       className="approve-button"
-                      onClick={() => handleApprove(leave.leaveId)}
+                      onClick={() =>
+                        handleApprove(leave.leaveId, leave.leaveStartDate)
+                      }
+                      disabled={new Date(leave.leaveStartDate) < new Date()}
                     >
                       Approve
                     </button>
@@ -109,7 +122,10 @@ const LeaveReport = ({ role, id }) => {
                   <td>
                     <button
                       className="reject-button"
-                      onClick={() => handleReject(leave.leaveId)}
+                      onClick={() =>
+                        handleReject(leave.leaveId, leave.leaveStartDate)
+                      }
+                      disabled={new Date(leave.leaveStartDate) < new Date()}
                     >
                       Reject
                     </button>

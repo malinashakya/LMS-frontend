@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import axios from "axios"; // Import Axios
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Home from "./Home";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Department from "./Department";
 import Employee from "./Employee";
 import LeaveRequest from "./LeaveRequest";
@@ -16,27 +15,12 @@ import ViewDepartment from "./ViewDepartment";
 import EditDepartment from "./EditDepartment";
 import EditEmployee from "./EditEmployee";
 import SideBar2 from "./SideBar2";
-import EmployeeRecord from "./assets/EmployeeRecord";
+import EmployeeRecord from "./EmployeeRecord";
+import { UserContext } from "./UserContext";
 
 function App() {
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
-  const [role, setRole] = useState("");
-  const [id, setId] = useState(""); // Add state for ID
-
-  useEffect(() => {
-    // Fetch role from URL query params
-    const urlParams = new URLSearchParams(window.location.search);
-    const roleParam = urlParams.get("role");
-    const fullnameParam = urlParams.get("fullname");
-    const idParam = urlParams.get("id"); // Use idParam to avoid naming conflict
-    console.log("Fullname:", fullnameParam);
-    console.log("ID:", idParam);
-
-    setRole(roleParam);
-    setId(idParam); // Set ID state
-    console.log("Role:", roleParam);
-    axios.defaults.headers.common["Role"] = roleParam; // Example with role
-  }, []);
+  const { role, id } = useContext(UserContext);
+  const [openSidebarToggle, setOpenSidebarToggle] = React.useState(false);
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -69,7 +53,7 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/adddetails" element={<AddDetails />} />
           <Route path="/adddepartment" element={<AddDepartment />} />
-          <Route path="/employee-record" element={<EmployeeRecord />} />
+          <Route path="/employee-record/:id" element={<EmployeeRecord />} />
           <Route
             path="/viewdepartment/:department_code"
             element={<ViewDepartment />}

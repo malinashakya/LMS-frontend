@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "./UserContext"; // Adjust the path as necessary
 
 const EmployeeRecord = () => {
+  const { id: userId } = useContext(UserContext); // Accessing id from UserContext
+
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { employee_id } = useParams();
 
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await fetch(`http://localhost:8084/employees/1`);
+        const response = await fetch(
+          `http://localhost:8084/employees/${userId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch employee");
         }
@@ -26,11 +29,13 @@ const EmployeeRecord = () => {
     };
 
     fetchEmployee();
-  }, [employee_id]);
+  }, [userId]);
 
   const handleEdit = () => {
-    // Redirect to the edit page for the employee
-    window.location.href = `/editemployee/${employee.user.id}`;
+    if (employee && employee.user && employee.user.id) {
+      // Redirect to the edit page for the employee
+      window.location.href = `/editemployee/${employee.user.id}`;
+    }
   };
 
   if (loading) {
