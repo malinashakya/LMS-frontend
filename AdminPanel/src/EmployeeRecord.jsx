@@ -62,7 +62,6 @@ const EmployeeRecord = () => {
             <th>Date of Birth</th>
             <th>Contact</th>
             <th>Department</th>
-            <th>Total Leave</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -76,7 +75,6 @@ const EmployeeRecord = () => {
             <td>{employee.dateOfBirth}</td>
             <td>{employee.contact}</td>
             <td>{employee.department.department_name || "Unknown"}</td>
-            <td>{employee.leaveLeft}</td>
             <td>
               <button
                 style={{ backgroundColor: "yellow", color: "black" }} // Adjust color as needed

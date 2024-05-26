@@ -1,0 +1,23 @@
+.leave-report {
+    margin: 20px;
+  }
+  
+  .leave-tablee {
+    width: 150%;
+    border-collapse: collapse;
+    font-size:18px;
+  }
+  
+  .leave-tablee th,
+  .leave-tablee td {
+    height:40px;
+    border: 1px solid white;
+    padding: 10px; /* Increase padding for better spacing */
+    text-align: center;
+    
+  }
+  
+  .leave-tablee th {
+    background-color: #333;
+    color: white;
+  }

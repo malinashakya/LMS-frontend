@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./LeaveReport.css"; // Import CSS file
+import { useState, useEffect, useContext } from "react";
+import "./MyLeaveReport.css"; // Import CSS file
 import { UserContext } from "./UserContext"; // Import UserContext
 
 const MyLeaveReport = () => {
@@ -23,12 +23,11 @@ const MyLeaveReport = () => {
   return (
     <div className="leave-report">
       <h2>Leave Report</h2>
-      <table className="leave-table">
+      <table className="leave-tablee">
         <thead>
           <tr>
-            <th>S.N.</th>
-            <th>Employee ID</th>
-            <th>Employee Name</th>
+            <th>Leave ID</th>
+
             <th>Starting Date</th>
             <th>Ending Date</th>
             <th>Reason for Leave</th>
@@ -41,9 +40,7 @@ const MyLeaveReport = () => {
               // Render rows only if id matches employee ID
               id == leave.employee.employeeId && (
                 <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{leave.employee.employeeId}</td>
-                  <td>{leave.employee.user.fullname}</td>
+                  <td>{leave.leaveId}</td>
                   <td>{leave.leaveStartDate}</td>
                   <td>{leave.leaveEndDate}</td>
                   <td>{leave.leaveReason}</td>

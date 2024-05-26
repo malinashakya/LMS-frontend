@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./LeaveRequest.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 const LeaveRequest = () => {
-  const employeeId = 1;
+  const { id: employeeId } = useContext(UserContext);
+  // const employeeId = 1;
   const [startDate, setStartDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
@@ -42,7 +44,7 @@ const LeaveRequest = () => {
       setLeaveReason("");
 
       console.log("Leave applied successfully!");
-      navigate("/leave-reports"); // Navigate to leave reports page after successful leave application
+      navigate("/my-leave-reports"); // Navigate to leave reports page after successful leave application
     } catch (error) {
       console.error("Error applying leave:", error);
     }
