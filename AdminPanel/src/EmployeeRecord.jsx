@@ -62,7 +62,7 @@ const EmployeeRecord = () => {
             <th>Date of Birth</th>
             <th>Contact</th>
             <th>Department</th>
-            <th>Leave Left</th>
+            <th>Total Leave</th>
             <th>Actions</th>
           </tr>
         </thead>

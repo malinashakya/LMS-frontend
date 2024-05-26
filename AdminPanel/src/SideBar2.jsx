@@ -41,7 +41,7 @@ function SideBar2({ openSidebarToggle, OpenSidebar }) {
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/leave-reports" onClick={openSidebarToggle}>
+            <Link to="/my-leave-reports" onClick={openSidebarToggle}>
               <BsMenuButtonWideFill className="icon" /> Leave Reports
             </Link>
           </li>

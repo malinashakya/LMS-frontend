@@ -17,6 +17,7 @@ import EditEmployee from "./EditEmployee";
 import SideBar2 from "./SideBar2";
 import EmployeeRecord from "./EmployeeRecord";
 import { UserContext } from "./UserContext";
+import MyLeaveReport from "./MyLeaveReport";
 
 function App() {
   const { role, id } = useContext(UserContext);
@@ -50,6 +51,7 @@ function App() {
             path="/leave-reports"
             element={<LeaveReport role={role} id={id} />}
           />
+          <Route path="/my-leave-reports" element={<MyLeaveReport />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/adddetails" element={<AddDetails />} />
           <Route path="/adddepartment" element={<AddDepartment />} />

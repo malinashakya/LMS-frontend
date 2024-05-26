@@ -93,7 +93,7 @@ const LeaveReport = ({ role, id }) => {
             <th>Ending Date</th>
             <th>Reason for Leave</th>
             <th>Status</th>
-            {role === "admin" && <th colSpan={2}>Action</th>}
+            <th colSpan={2}>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -106,32 +106,29 @@ const LeaveReport = ({ role, id }) => {
               <td>{leave.leaveEndDate}</td>
               <td>{leave.leaveReason}</td>
               <td>{leave.status}</td>
-              {role === "admin" && (
-                <>
-                  <td>
-                    <button
-                      className="approve-button"
-                      onClick={() =>
-                        handleApprove(leave.leaveId, leave.leaveStartDate)
-                      }
-                      disabled={new Date(leave.leaveStartDate) < new Date()}
-                    >
-                      Approve
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="reject-button"
-                      onClick={() =>
-                        handleReject(leave.leaveId, leave.leaveStartDate)
-                      }
-                      disabled={new Date(leave.leaveStartDate) < new Date()}
-                    >
-                      Reject
-                    </button>
-                  </td>
-                </>
-              )}
+
+              <td>
+                <button
+                  className="approve-button"
+                  onClick={() =>
+                    handleApprove(leave.leaveId, leave.leaveStartDate)
+                  }
+                  disabled={new Date(leave.leaveStartDate) < new Date()}
+                >
+                  Approve
+                </button>
+              </td>
+              <td>
+                <button
+                  className="reject-button"
+                  onClick={() =>
+                    handleReject(leave.leaveId, leave.leaveStartDate)
+                  }
+                  disabled={new Date(leave.leaveStartDate) < new Date()}
+                >
+                  Reject
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
