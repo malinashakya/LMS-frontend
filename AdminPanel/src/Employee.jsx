@@ -6,6 +6,7 @@ const Employee = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // State to store search query
   const { employee_id } = useParams();
 
   useEffect(() => {
@@ -53,9 +54,22 @@ const Employee = () => {
     }
   };
 
+  // Filter employees based on search query
+  const filteredEmployees = employees.filter((employee) =>
+    employee.user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="employee-container">
       <h2>Employees</h2>
+      {/* Search box */}
+      <input
+        type="text"
+        placeholder="Search by name..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        style={{ width: "150px", marginBottom: "8px" }}
+      />
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -70,27 +84,20 @@ const Employee = () => {
               <th>Date of Birth</th>
               <th>Contact</th>
               <th>Department</th>
-              <th>Leave Left</th>
+              <th>Leave Applied</th>
               <th colSpan={2}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {employees.map((employee) => (
-              <tr key={employee.user ? employee.user.id : employee.employee_id}>
-                <td>
-                  {employee.user ? employee.user.id || "Unknown" : "Unknown"}
-                </td>
-                <td>
-                  {employee.user
-                    ? employee.user.fullname || "Unknown"
-                    : "Unknown"}
-                </td>
-
+            {filteredEmployees.map((employee) => (
+              <tr key={employee.user.id}>
+                <td>{employee.user.id || "Unknown"}</td>
+                <td>{employee.user.fullname || "Unknown"}</td>
                 <td>{employee.address}</td>
                 <td>{employee.dateOfBirth}</td>
                 <td>{employee.contact}</td>
                 <td>{employee.department.department_name || "Unknown"}</td>
-                <td>{employee.leaveLeft}</td>
+                <td>{employee.leaveApplied}</td>
                 <td>
                   <Link
                     className="update-button"

@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 const EditEmployee = ({ role }) => {
-  // Receive the `role` prop
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -28,6 +27,12 @@ const EditEmployee = ({ role }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "department" && role !== "admin") {
+      alert("Only Admins are allowed to change the department");
+      return;
+    }
+
     setEmployee((prevEmployee) => ({
       ...prevEmployee,
       [name]: value,
@@ -40,7 +45,7 @@ const EditEmployee = ({ role }) => {
       await axios.put(`http://localhost:8084/employees/${id}`, employee);
       console.log("Employee updated successfully!");
       // Navigate based on the role
-      navigate(role === "admin" ? "/employees" : "/employee-record");
+      navigate(role === "admin" ? "/employees" : `/employee-record/${id}`);
     } catch (error) {
       console.error("Error updating employee:", error);
     }
@@ -98,15 +103,6 @@ const EditEmployee = ({ role }) => {
                 ? employee.department.department_name
                 : "Unknown" || ""
             }
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Leave Left:{" "}
-          <input
-            type="text"
-            name="leaveLeft"
-            value={"5"}
             onChange={handleChange}
           />
         </label>

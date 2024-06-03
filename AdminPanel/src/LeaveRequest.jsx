@@ -50,6 +50,7 @@ const LeaveRequest = () => {
     }
   };
 
+  const today = new Date().toISOString().slice(0, 10);
   return (
     <div className="leave-request-form">
       <h2>Leave Request</h2>
@@ -73,11 +74,13 @@ const LeaveRequest = () => {
           <input
             type="date"
             value={startDate}
+            min={today}
             onChange={(e) => setStartDate(e.target.value)}
           />
           <input
             type="date"
             value={endDate}
+            min={today}
             onChange={(e) => setEndDate(e.target.value)}
           />
         </div>

@@ -31,7 +31,7 @@ function SideBar2({ openSidebarToggle, OpenSidebar }) {
             </Link>
           </li>
           <li className="sidebar-list-item">
-            <Link to="/employee-record/1" onClick={OpenSidebar}>
+            <Link to="/employee-record/id" onClick={OpenSidebar}>
               <BsPeopleFill className="icon" /> Detail
             </Link>
           </li>

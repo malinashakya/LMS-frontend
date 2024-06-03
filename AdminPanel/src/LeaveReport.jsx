@@ -4,6 +4,7 @@ import axios from "axios"; // Import axios for making HTTP requests
 
 const LeaveReport = ({ role, id }) => {
   const [leaves, setLeaves] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State to store search query
 
   useEffect(() => {
     fetchLeaves(); // Fetch leaves data when the component mounts
@@ -18,6 +19,13 @@ const LeaveReport = ({ role, id }) => {
       console.error("Error fetching leaves:", error);
     }
   };
+
+  // Filter leaves based on search query
+  const filteredLeaves = leaves.filter((leave) =>
+    leave.employee.user.fullname
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
   const handleApprove = async (leaveId, leaveStartDate) => {
     if (new Date(leaveStartDate) < new Date()) {
@@ -83,6 +91,14 @@ const LeaveReport = ({ role, id }) => {
   return (
     <div className="leave-report">
       <h2>Leave Report</h2>
+      {/* Search box */}
+      <input
+        type="text"
+        placeholder="Search by employee name..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        style={{ width: "300px", marginBottom: "8px" }}
+      />
       <table className="leave-table">
         <thead>
           <tr>
@@ -97,7 +113,7 @@ const LeaveReport = ({ role, id }) => {
           </tr>
         </thead>
         <tbody>
-          {leaves.map((leave, index) => (
+          {filteredLeaves.map((leave, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{leave.employee.employeeId}</td>
