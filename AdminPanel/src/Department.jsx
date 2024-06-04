@@ -8,6 +8,7 @@ const Department = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { department_code } = useParams();
 
@@ -73,9 +74,22 @@ const Department = () => {
     return count;
   };
 
+  // Filter departments based on search query
+  const filteredDepartments = departments.filter((department) =>
+    department.department_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="department-container">
       <h2>Departments</h2>
+      {/* Search box */}
+      <input
+        type="text"
+        placeholder="Search by department name"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        style={{ width: "200px", marginBottom: "8px" }}
+      />
       <h4>
         <Link className="department-add-button" to={"/adddepartment"}>
           Add Department
@@ -97,7 +111,7 @@ const Department = () => {
             </tr>
           </thead>
           <tbody>
-            {departments.map((department) => (
+            {filteredDepartments.map((department) => (
               <tr key={department.department_code}>
                 <td>{department.department_code}</td>
                 <td>{department.department_name}</td>
