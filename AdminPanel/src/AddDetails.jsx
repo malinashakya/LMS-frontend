@@ -7,7 +7,6 @@ const AddDetails = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "",
-    fullname: "",
     address: "",
     dob: "",
     contact: "",
@@ -67,7 +66,6 @@ const AddDetails = () => {
           email: "", // Add email here if available
           password: "", // Add password here if available
           role: "", // Add role here if available
-          fullname: formData.fullname,
         },
       };
 
@@ -76,7 +74,6 @@ const AddDetails = () => {
         console.log("Employee added successfully!");
         setFormData({
           id: "",
-          fullname: "",
           address: "",
           dob: "",
           contact: "",
@@ -105,15 +102,6 @@ const AddDetails = () => {
             type="text"
             name="id"
             value={formData.id}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Fullname:</label>
-          <input
-            type="text"
-            name="fullname"
-            value={formData.fullname}
             onChange={handleChange}
           />
         </div>

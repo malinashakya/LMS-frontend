@@ -90,7 +90,7 @@ const Employee = () => {
           <tbody>
             {filteredEmployees.map((employee) => (
               <tr key={employee.user.id}>
-                <td>{employee.user.id || "Unknown"}</td>
+                <td>{employee.employeeId || "Unknown"}</td>
                 <td>{employee.user.fullname || "Unknown"}</td>
                 <td>{employee.address}</td>
                 <td>{employee.dateOfBirth}</td>
@@ -99,7 +99,7 @@ const Employee = () => {
                 <td>
                   <Link
                     className="update-button"
-                    to={`/editemployee/${employee.user.id}`}
+                    to={`/editemployee/${employee.employeeId}`}
                   >
                     Edit
                   </Link>
@@ -107,7 +107,7 @@ const Employee = () => {
                 <td>
                   <button
                     className="delete-button"
-                    onClick={() => handleDelete(employee.user.id)}
+                    onClick={() => handleDelete(employee.employeeId)}
                   >
                     Delete
                   </button>
