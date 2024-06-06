@@ -44,7 +44,7 @@ function Home() {
 
   const data = [
     { name: "Employees", value: employeesCount },
-    { name: "Users", value: employeesCount + 1 },
+    { name: "Users", value: employeesCount },
     { name: "Departments", value: departmentsCount },
     { name: "Leaves", value: leavesCount }, // Assuming this is the count of leaves
   ];
@@ -61,7 +61,7 @@ function Home() {
             <h3>USERS</h3>
             <BsPeopleFill className="card_icon" />
           </div>
-          <h1>{employeesCount + 1}</h1>
+          <h1>{employeesCount}</h1>
         </div>
         <div className="card">
           <div className="card-inner">

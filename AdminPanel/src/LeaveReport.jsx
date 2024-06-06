@@ -122,7 +122,6 @@ const LeaveReport = ({ role, id }) => {
               <td>{leave.leaveEndDate}</td>
               <td>{leave.leaveReason}</td>
               <td>{leave.status}</td>
-
               <td>
                 <button
                   className="approve-button"

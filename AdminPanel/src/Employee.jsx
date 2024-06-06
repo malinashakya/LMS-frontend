@@ -84,7 +84,6 @@ const Employee = () => {
               <th>Date of Birth</th>
               <th>Contact</th>
               <th>Department</th>
-              <th>Leave Applied</th>
               <th colSpan={2}>Actions</th>
             </tr>
           </thead>
@@ -97,7 +96,6 @@ const Employee = () => {
                 <td>{employee.dateOfBirth}</td>
                 <td>{employee.contact}</td>
                 <td>{employee.department.department_name || "Unknown"}</td>
-                <td>{employee.leaveApplied}</td>
                 <td>
                   <Link
                     className="update-button"
