@@ -88,6 +88,14 @@ const LeaveReport = ({ role, id }) => {
     }
   };
 
+  const calculateLeaveDays = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Including the start date
+    return diffDays;
+  };
+
   return (
     <div className="leave-report">
       <h2>Leave Report</h2>
@@ -107,6 +115,7 @@ const LeaveReport = ({ role, id }) => {
             <th>Employee Name</th>
             <th>Starting Date</th>
             <th>Ending Date</th>
+            <th>Number of Days</th> {/* New column for number of leave days */}
             <th>Reason for Leave</th>
             <th>Status</th>
             <th colSpan={2}>Action</th>
@@ -120,6 +129,10 @@ const LeaveReport = ({ role, id }) => {
               <td>{leave.employee.user.fullname}</td>
               <td>{leave.leaveStartDate}</td>
               <td>{leave.leaveEndDate}</td>
+              <td>
+                {calculateLeaveDays(leave.leaveStartDate, leave.leaveEndDate)}
+              </td>{" "}
+              {/* Calculate and display number of leave days */}
               <td>{leave.leaveReason}</td>
               <td>{leave.status}</td>
               <td>
@@ -128,7 +141,10 @@ const LeaveReport = ({ role, id }) => {
                   onClick={() =>
                     handleApprove(leave.leaveId, leave.leaveStartDate)
                   }
-                  disabled={new Date(leave.leaveStartDate) < new Date()}
+                  disabled={
+                    new Date(leave.leaveStartDate) <
+                    new Date().setHours(0, 0, 0, 0)
+                  }
                 >
                   Approve
                 </button>
@@ -139,7 +155,10 @@ const LeaveReport = ({ role, id }) => {
                   onClick={() =>
                     handleReject(leave.leaveId, leave.leaveStartDate)
                   }
-                  disabled={new Date(leave.leaveStartDate) < new Date()}
+                  disabled={
+                    new Date(leave.leaveStartDate) <
+                    new Date().setHours(0, 0, 0, 0)
+                  }
                 >
                   Reject
                 </button>
